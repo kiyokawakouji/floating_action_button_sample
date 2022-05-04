@@ -1,108 +1,70 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
-void main() => runApp(const MyApp());
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  SpeedDial buildSpeedDial() {
+    return SpeedDial(
+      animatedIcon: AnimatedIcons.menu_close,
+      animatedIconTheme: const IconThemeData(size: 28),
+      backgroundColor: Colors.green[900],
+      visible: true,
+      curve: Curves.bounceInOut,
+      children: [
+        SpeedDialChild(
+          child: const Icon(Icons.chrome_reader_mode, color: Colors.white),
+          backgroundColor: Colors.green,
+          onTap: () => print('Pressed Read Later'),
+          label: 'Read',
+          labelStyle:
+          const TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          labelBackgroundColor: Colors.black,
+        ),
+        SpeedDialChild(
+          child: const Icon(Icons.create, color: Colors.white),
+          backgroundColor: Colors.green,
+          onTap: () => print('Pressed Write'),
+          label: 'Write',
+          labelStyle:
+          const TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          labelBackgroundColor: Colors.black,
+        ),
+        SpeedDialChild(
+          child: const Icon(Icons.laptop_chromebook, color: Colors.white),
+          backgroundColor: Colors.green,
+          onTap: () => print('Pressed Code'),
+          label: 'Code',
+          labelStyle:
+          const TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          labelBackgroundColor: Colors.black,
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Flow Example'),
+          title: const Text('FAB Sample'),
+          backgroundColor: Colors.green,
         ),
-        body: const FlowMenu(),
+        body: const SafeArea(
+          child: Center(
+            child: Text(
+              'Welcome to FAB',
+              style: TextStyle(
+                fontSize: 30,
+                color: Colors.green,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+        floatingActionButton: buildSpeedDial(),
       ),
     );
-  }
-}
-
-class FlowMenu extends StatefulWidget {
-  const FlowMenu({Key? key}) : super(key: key);
-
-  @override
-  State<FlowMenu> createState() => _FlowMenuState();
-}
-
-class _FlowMenuState extends State<FlowMenu> with SingleTickerProviderStateMixin {
-  late AnimationController menuAnimation;
-  IconData lastTapped = Icons.notifications;
-  final List<IconData> menuItems = <IconData>[
-    Icons.menu,
-    Icons.new_releases,
-    Icons.notifications,
-    Icons.settings,
-    Icons.home,
-  ];
-
-  void _updateMenu(IconData icon) {
-    if (icon != Icons.menu) {
-      setState(() => lastTapped = icon);
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    menuAnimation = AnimationController(
-      duration: const Duration(milliseconds: 250),
-      vsync: this,
-    );
-  }
-
-  Widget flowMenuItem(IconData icon) {
-    final buttonDiameter = MediaQuery.of(context).size.width / menuItems.length;
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: RawMaterialButton(
-        fillColor: lastTapped == icon ? Colors.amber[700] : Colors.blue,
-        splashColor: Colors.amber[100],
-        shape: const CircleBorder(),
-        constraints: BoxConstraints.tight(Size(buttonDiameter, buttonDiameter)),
-        onPressed: () {
-          _updateMenu(icon);
-          menuAnimation.status == AnimationStatus.completed
-              ? menuAnimation.reverse()
-              : menuAnimation.forward();
-        },
-        child: Icon(
-          icon,
-          color: Colors.white,
-          size: 45,
-        ),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Flow(
-      delegate: FlowMenuDelegate(menuAnimation: menuAnimation),
-      children: menuItems.map<Widget>(flowMenuItem).toList(),
-    );
-  }
-}
-
-class FlowMenuDelegate extends FlowDelegate {
-  FlowMenuDelegate({required this.menuAnimation}) : super(repaint: menuAnimation);
-
-  final Animation<double> menuAnimation;
-
-  @override
-  bool shouldRepaint(FlowMenuDelegate oldDelegate) {
-    return menuAnimation != oldDelegate.menuAnimation;
-  }
-
-  @override
-  void paintChildren(FlowPaintingContext context) {
-    for (var i = context.childCount - 1; i >= 0; i--) {
-      print(menuAnimation.value);
-      final dx = (context.getChildSize(i)!.height + 10) * i;
-      context.paintChild(
-        i,
-        transform: Matrix4.translationValues(0, dx * menuAnimation.value + 10, 0),
-      );
-    }
   }
 }
