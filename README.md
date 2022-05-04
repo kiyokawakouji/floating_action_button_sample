@@ -1,6 +1,8 @@
 # floating_action_button_sample
 
-A new Flutter project.
+アニメーション付きフローティングアクションボタンのサンプルアプリ
+
+<img src="https://user-images.githubusercontent.com/57555916/166712228-cfa2bcff-a98c-4920-951b-38175399d0a9.png" width="200"><img src="https://user-images.githubusercontent.com/57555916/166712917-4e156e4d-2458-45c2-8acd-26155589fa22.png" width="200">
 
 ## Getting Started
 
