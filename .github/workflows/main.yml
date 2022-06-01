@@ -2,12 +2,14 @@ name: Android CD
 
 #発火条件
 on:
-  #ソースをdevelopブランチにプッシュする時
-  push:
-    branches: [ develop ]
   #他のブランチをmasterブランチにマージする時
   pull_request:
-    branches: [ develop ]
+    branches: 
+      - 'main'
+      - '!master'
+    types:
+      - opened
+      - reopened
 
 jobs:
   build:
