@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   SpeedDial buildSpeedDial() {
     return SpeedDial(
       animatedIcon: AnimatedIcons.menu_close,
@@ -15,28 +17,28 @@ class MyApp extends StatelessWidget {
         SpeedDialChild(
           child: const Icon(Icons.chrome_reader_mode, color: Colors.white),
           backgroundColor: Colors.green,
-          onTap: () => print('Pressed Read Later'),
+          onTap: () => debugPrint('Pressed Read Later'),
           label: 'Read',
           labelStyle:
-          const TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+              const TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
           labelBackgroundColor: Colors.black,
         ),
         SpeedDialChild(
           child: const Icon(Icons.create, color: Colors.white),
           backgroundColor: Colors.green,
-          onTap: () => print('Pressed Write'),
+          onTap: () => debugPrint('Pressed Write'),
           label: 'Write',
           labelStyle:
-          const TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+              const TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
           labelBackgroundColor: Colors.black,
         ),
         SpeedDialChild(
           child: const Icon(Icons.laptop_chromebook, color: Colors.white),
           backgroundColor: Colors.green,
-          onTap: () => print('Pressed Code'),
+          onTap: () => debugPrint('Pressed Code'),
           label: 'Code',
           labelStyle:
-          const TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+              const TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
           labelBackgroundColor: Colors.black,
         ),
       ],
