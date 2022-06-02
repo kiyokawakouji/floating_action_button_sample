@@ -1,25 +1,25 @@
 name: Android CD
 
-#発火条件
+# 発火条件
 on:
-  #他のブランチをmasterブランチにマージする時
   pull_request:
     branches: 
       - 'main'
       - '!master'
     types:
-      - opened
-      - reopened
+      - closed
 
 jobs:
   build:
-    #ビルド環境
+    # ビルド環境
     runs-on: ubuntu-latest
+    # Pull Requestをマージした時だけ発火
+    if: github.event.pull_request.merged == true
 
     steps:
-      #リポジトリからソースをダンロード
+      # リポジトリからソースをダンロード
       - uses: actions/checkout@v2
-      #JAVA環境構築
+      # JAVA環境構築
       - name: install java 8.x
         uses: actions/setup-java@v1
         with:
@@ -31,16 +31,16 @@ jobs:
           path: /Users/runner/hostedtoolcache/flutter
           key: ${{ runner.OS }}-flutter-install-cache
 
-      #Flutter環境構築
+      # Flutter環境構築
       - name: install flutter
         uses: subosito/flutter-action@v1
         with:
-          #Flutterのバージョン
+          # Flutterのバージョン
           flutter-version: '2.10.5'
           channel: 'stable'
 
       - name: flutter dependencies install
-        #ライブラリーの導入
+        # ライブラリーの導入
         run: flutter pub get
 
       - name: build apk
